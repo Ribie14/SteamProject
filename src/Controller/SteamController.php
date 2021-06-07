@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SteamController extends AbstractController
 {
-    #[Route('/steam', name: 'steam')]
+    #[Route('/steamv2', name: 'steamv2')]
     public function index(): Response
     {
         return $this->render('steam/index.html.twig', [
