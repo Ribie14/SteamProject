@@ -35,6 +35,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
+public $confirm_password;
+
     public function getId(): ?int
     {
         return $this->id;
