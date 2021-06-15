@@ -1,12 +1,13 @@
 security:
     encoders:
         App\Entity\User:
-            algorithm: auto
+            algorithm: bcrypt
 
     # https://symfony.com/doc/current/security/experimental_authenticators.html
     enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    providers:
+    providers:      
+
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
@@ -19,6 +20,13 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+
+            form_login:
+                login_path: security_login
+                check_path: security_login
+            logout:
+                path: security_logout
+                target: jeux
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
