@@ -4,11 +4,18 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(
+ * fields={"username"},
+ * message = "Le nom d'utilisateur a deja été utilisé")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -16,6 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Assert\ID
      */
     private $id;
 
@@ -32,10 +40,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(min="8", minMessage="Votre message doit faire au moin 8 caracteres." )
      */
     private $password;
 
-public $confirm_password;
+    /*
+    * @Assert\EqualTo(propertyPath="password", message="Vos deux mots de passe sont différents")
+     */
+    public $confirm_password;
 
     public function getId(): ?int
     {
