@@ -4,35 +4,19 @@
 
 {% block body %}
 <section class="jeux">
+
+    {% for jeu in jeux %}
     <article>
-         <h2>Hollow Knight</h2>
-            <div class="metadata">Sortie le 24/02/2017</div>
+         <h2>{{ jeu.Titre }}</h2>
+            <div class="metadata">Sortie le {{jeu.Date | date('d/m/Y') }}</div>
                 <div class ="content">
-                    <img src="http://placehold.it/350x350" alt"">
-                    <p>nohbiohiohjip</p>
-                    <a href="{{ path('jeux_show') }}" class="btn btn-primary">En savoir plus</a>
+                    <img src="{{ jeu.image }}" alt"">
+                    <p>{{ jeu.Prix }}</p>
+                    <p>{{ jeu.Description }}</p>
+                    <a href="{{ path('jeux_show', {'id' : jeu.id}) }}" class="btn btn-primary">En savoir plus</a>
                 </div>
     </article>
-
-    <article>
-            <h2>Hollow Knight</h2>
-                <div class="metadata">Sortie le 24/02/2017</div>
-                    <div class ="content">
-                        <img src="http://placehold.it/350x350" alt"">
-                        <p>nohbiohiohjip</p>
-                        <a href="{{ path('jeux_show') }}" class="btn btn-primary">En savoir plus</a>
-                    </div>
-    </article>
-
-    <article>
-            <h2>Hollow Knight</h2>
-                <div class="metadata">Sortie le 24/02/2017</div>
-                    <div class ="content">
-                        <img src="http://placehold.it/350x350" alt"">
-                        <p>nohbiohiohjip</p>
-                        <a href="{{ path('jeux_show') }}" class="btn btn-primary">En savoir plus</a>
-                    </div>
-    </article>
+    {% endfor %}
 
 </section>
 {% endblock %}

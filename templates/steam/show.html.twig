@@ -3,17 +3,13 @@
 {% block body %}
 
     <article>
-         <h2>Hollow Knight</h2>
-            <div class="metadata">Sortie le 24/02/201</div>
+         <h2>{{ jeux.Titre }}</h2>
+            <div class="metadata">Sortie le {{ jeux.Date | date('d/m/Y') }} </div>
                 <div class ="content">
-                    <img src="http://placehold.it/350x350" alt"">
-                    <p>nohbiohiohjip</p>
+                    <img src="{{ jeux.image }}" alt"">
+                    {{ jeux.Description | raw}}
                 </div>
-                <hr>
-                <p>nohbiohiosrfzegrqeghezGREgjiàze9HG0REH9YG0Ehgçàerhgitre^hGI8RZ¨HGhjip</p>
-                <p>nohbiohio¨GVEZRtgop£EJGOR£EJOG£JR9GJZ9à=$gjçrà+JG9ERhjip</p>
-                <p>nohbiohioBGRkionibfhngir£JOF£JOEZ$jfçieà$rhhjip</p>
-                </hr>
+                
     </article>
 
 {% endblock %}
