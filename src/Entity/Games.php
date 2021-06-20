@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\GamesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=GamesRepository::class)
@@ -24,6 +25,7 @@ class Games
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=5, max=255)
      */
     private $createur;
 
@@ -34,6 +36,7 @@ class Games
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Length(min=30)
      */
     private $Prix;
 
@@ -44,6 +47,7 @@ class Games
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Length(min=3)
      */
     private $Date;
 
@@ -54,6 +58,7 @@ class Games
 
     /**
      * @ORM\Column(type="string", length=1000)
+     * @Assert\Url()
      */
     private $image;
 

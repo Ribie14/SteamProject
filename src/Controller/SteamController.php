@@ -9,6 +9,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+use App\Entity\Comment;
+use app\Form\CommentType;
+use app\Form\JeuType;
 
 class SteamController extends AbstractController
 {
@@ -33,22 +39,45 @@ class SteamController extends AbstractController
     } 
     
     #[Route('/publication',name: 'publication_jeux')]
+    #[Route('/publication/{id}/edit',name: 'publication_edit')]
 
-    public function publication(Request $request,EntityManagerInterface $manager) {
-        $jeux = new Games();
+    public function form(Games $jeux = null, Request $request,EntityManagerInterface $manager) {
+        
 
-        $form = $this->createFormBuilder($jeux)
-                     ->add('Titre')
-                     ->add('createur')
-                     ->add('description')
-                     ->add('Prix')
-                     ->add('categorie')
-                     ->add('Date')
-                     ->add('image')
-                     ->getForm();
+        if(!$jeux){
+            $jeux = new Games();
+        }
+
+        //$form = $this->createFormBuilder($jeux)
+          //           ->add('Titre')
+           //          ->add('createur')
+            //         ->add('description')
+            //         ->add('Prix')
+              //       ->add('categorie')
+               //      ->add('image')
+                 //   ->getForm();
+
+        $form = $this->createForm(JeuType::class, $jeux);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            if($article->getId()){
+                $jeux->setCreatedAt(new \DataTime());
+            }
+            
+
+            $manager->persist($jeux);
+            $manager->flush();
+
+            return $this->redirectToRoute('publication_jeux', ['id' => $jeux->getId
+            ()]);
+        }
         
         return $this->render('steam/publication.html.twig',[
-            'formJeux' => $form->createView()
+            'formJeux' => $form->createView(),
+            'editMode' => $jeux->getId() !== null
         ]);
     }
 
@@ -56,8 +85,12 @@ class SteamController extends AbstractController
 
     public function show(Games $jeux) {
 
-        return $this->render('steam/show.html.twig',[
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        return $this->render('steam/show.html.twig', [
             'jeux' => $jeux
+           // 'commentForm' => $form->createView()
          
         ]);
     }
