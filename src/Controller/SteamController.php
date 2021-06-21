@@ -63,7 +63,7 @@ class SteamController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            if($article->getId()){
+            if($jeux->getId()){
                 $jeux->setCreatedAt(new \DataTime());
             }
             
@@ -93,6 +93,12 @@ class SteamController extends AbstractController
            // 'commentForm' => $form->createView()
          
         ]);
+    }
+
+    #[Route('/profile', name: 'profile')]
+
+    public function profile() {
+        return $this->render('steam/profile.html.twig');
     }
 
    

@@ -36,7 +36,6 @@ class Games
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Length(min=30)
      */
     private $Prix;
 
