@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Games;
@@ -13,8 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use App\Entity\Comment;
-use app\Form\CommentType;
-use app\Form\JeuType;
+use App\Form\CommentType;
+use App\Form\JeuType;
 
 class SteamController extends AbstractController
 {
@@ -34,15 +33,14 @@ class SteamController extends AbstractController
     #[Route('/', name: 'home')]
 
     public function home() {
-        return $this->render('steam/home.html.twig'); 
-       
-    } 
-    
+        return $this->render('steam/home.html.twig');
+} 
+
     #[Route('/publication',name: 'publication_jeux')]
     #[Route('/publication/{id}/edit',name: 'publication_edit')]
 
     public function form(Games $jeux = null, Request $request,EntityManagerInterface $manager) {
-        
+
 
         if(!$jeux){
             $jeux = new Games();
@@ -66,7 +64,7 @@ class SteamController extends AbstractController
             if($jeux->getId()){
                 $jeux->setCreatedAt(new \DataTime());
             }
-            
+
 
             $manager->persist($jeux);
             $manager->flush();
@@ -74,7 +72,7 @@ class SteamController extends AbstractController
             return $this->redirectToRoute('publication_jeux', ['id' => $jeux->getId
             ()]);
         }
-        
+
         return $this->render('steam/publication.html.twig',[
             'formJeux' => $form->createView(),
             'editMode' => $jeux->getId() !== null
@@ -91,7 +89,7 @@ class SteamController extends AbstractController
         return $this->render('steam/show.html.twig', [
             'jeux' => $jeux
            // 'commentForm' => $form->createView()
-         
+
         ]);
     }
 

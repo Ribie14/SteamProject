@@ -31,6 +31,7 @@ class Games
 
     /**
      * @ORM\Column(type="string", length=500)
+     * @Assert\Length(min=30)
      */
     private $description;
 
@@ -46,14 +47,8 @@ class Games
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\Length(min=3)
      */
     private $Date;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $téléchargement;
 
     /**
      * @ORM\Column(type="string", length=1000)
@@ -68,7 +63,7 @@ class Games
 
     public function getTitre(): ?string
     {
-        return $this->Titre;
+        return $this->Titre;    
     }
 
     public function setTitre(string $Titre): self
@@ -134,18 +129,6 @@ class Games
     public function setDate(\DateTimeInterface $Date): self
     {
         $this->Date = $Date;
-
-        return $this;
-    }
-
-    public function getTéléchargement(): ?int
-    {
-        return $this->téléchargement;
-    }
-
-    public function setTéléchargement(int $téléchargement): self
-    {
-        $this->téléchargement = $téléchargement;
 
         return $this;
     }
