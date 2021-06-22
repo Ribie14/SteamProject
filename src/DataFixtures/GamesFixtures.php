@@ -10,6 +10,8 @@ class GamesFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+        $faker = Faker\Factory::create('fr_FR');
+
         for ($i = 1; $i <= 2; $i++){
             $jeux = new Games();
             $jeux -> setTitre("Nom jeux n°$i")
