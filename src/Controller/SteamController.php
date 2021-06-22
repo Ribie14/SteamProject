@@ -39,12 +39,13 @@ class SteamController extends AbstractController
     #[Route('/publication',name: 'publication_jeux')]
     #[Route('/publication/{id}/edit',name: 'publication_edit')]
 
-    public function form(Games $jeux = null, Request $request,EntityManagerInterface $manager) {
+    public function form(Request $Request, Games $jeux = null, Request $request,EntityManagerInterface $manager) {
 
 
         if(!$jeux){
             $jeux = new Games();
         }
+        
 
         //$form = $this->createFormBuilder($jeux)
           //           ->add('Titre')
@@ -59,11 +60,9 @@ class SteamController extends AbstractController
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
 
-            if($jeux->getId()){
-                $jeux->setCreatedAt(new \DataTime());
-            }
+
+        if($form->isSubmitted() && $form->isValid()){
 
 
             $manager->persist($jeux);
@@ -83,8 +82,8 @@ class SteamController extends AbstractController
 
     public function show(Games $jeux) {
 
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
+        //$comment = new Comment();
+        //$form = $this->createForm(CommentType::class, $comment);
 
         return $this->render('steam/show.html.twig', [
             'jeux' => $jeux

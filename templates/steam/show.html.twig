@@ -4,7 +4,6 @@
 
     <article>
          <h2>{{ jeux.Titre }}</h2>
-            <div class="metadata">Sortie le {{ jeux.Date | date('d/m/Y') }} </div>
                 <div class ="content">
                     <img src="{{ jeux.image }}" alt"">
                     {{ jeux.Description | raw}}
