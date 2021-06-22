@@ -43,9 +43,9 @@ class Games
     private $Prix;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string", length=500)
      */
-    private $Date;
+    private $categorie;
 
     /**
      * @ORM\Column(type="string", length=1000)
@@ -53,21 +53,6 @@ class Games
      */
     private $image;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="jeux")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $categorie;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="jeu", orphanRemoval=true)
-     */
-    private $comments;
-
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -122,18 +107,6 @@ class Games
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->Date;
-    }
-
-    public function setDate(\DateTimeInterface $Date): self
-    {
-        $this->Date = $Date;
-
-        return $this;
-    }
-
     public function getImage(): ?string
     {
         return $this->image;
@@ -146,44 +119,14 @@ class Games
         return $this;
     }
 
-    public function getCategorie(): ?Categorie
+    public function getCategorie(): ?string
     {
         return $this->categorie;
     }
 
-    public function setCategorie(?Categorie $categorie): self
+    public function setCategorie($categorie): self
     {
         $this->categorie = $categorie;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Comment[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setJeu($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getJeu() === $this) {
-                $comment->setJeu(null);
-            }
-        }
 
         return $this;
     }
