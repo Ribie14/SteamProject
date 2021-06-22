@@ -88,7 +88,7 @@ class SteamController extends AbstractController
 
         return $this->render('steam/show.html.twig', [
             'jeux' => $jeux
-           // 'commentForm' => $form->createView()
+            //'commentForm' => $form->createView()
 
         ]);
     }
@@ -99,5 +99,10 @@ class SteamController extends AbstractController
         return $this->render('steam/profile.html.twig');
     }
 
-   
+
+    #[Route('/inscription', name: 'inscription')]
+
+    public function inscription() {
+        return $this->render('steam/registration.html.twig');
+    }
 }

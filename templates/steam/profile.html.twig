@@ -1,1 +1,24 @@
-<h1>SALUT PAGE PROFILE</h1>
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<h1> PARAMÈTRES </h1>
+
+<p>Profil de {{app.user.username }}, voici toutes vos informations</p>
+
+
+<div class="grix xs2">
+    <div>User: </div>
+    <div>{{ app.user.username }}</div>
+
+    <button type="submit" class="btn btn-success">Modifier le profil</button>
+    <button type="submit" class="btn btn-success">Modifier le mot de passe</button>
+
+    <p>Jeux de {{app.user.username }}</p>
+    {% for jeu in app.user.username %}      
+            <div>Titre: </div>
+            <div>{{ jeux.Titre }}</div>
+    {% endfor %}
+</div>
+
+{% endblock %}
