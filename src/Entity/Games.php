@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GamesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -41,11 +43,6 @@ class Games
     private $Prix;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $categorie;
-
-    /**
      * @ORM\Column(type="date")
      */
     private $Date;
@@ -55,6 +52,22 @@ class Games
      * @Assert\Url()
      */
     private $image;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="jeux")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="jeu", orphanRemoval=true)
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -109,18 +122,6 @@ class Games
         return $this;
     }
 
-    public function getCategorie(): ?string
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(string $categorie): self
-    {
-        $this->categorie = $categorie;
-
-        return $this;
-    }
-
     public function getDate(): ?\DateTimeInterface
     {
         return $this->Date;
@@ -141,6 +142,48 @@ class Games
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setJeu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getJeu() === $this) {
+                $comment->setJeu(null);
+            }
+        }
 
         return $this;
     }
