@@ -38,6 +38,12 @@ class Games
     private $description;
 
     /**
+     * @ORM\Column(type="string")
+     * @Assert\Url()
+     */
+    private $url;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $Prix;
@@ -115,6 +121,18 @@ class Games
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
 
         return $this;
     }

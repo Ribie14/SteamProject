@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Games;
+use App\Entity\User;
 use App\Repository\GamesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,13 +40,12 @@ class SteamController extends AbstractController
     #[Route('/publication',name: 'publication_jeux')]
     #[Route('/publication/{id}/edit',name: 'publication_edit')]
 
-    public function form(Request $Request, Games $jeux = null, Request $request,EntityManagerInterface $manager) {
+    public function form(Games $jeux = null, Request $request,EntityManagerInterface $manager) {
 
 
         if(!$jeux){
             $jeux = new Games();
         }
-        
 
         //$form = $this->createFormBuilder($jeux)
           //           ->add('Titre')
@@ -60,9 +60,11 @@ class SteamController extends AbstractController
 
         $form->handleRequest($request);
 
-
-
         if($form->isSubmitted() && $form->isValid()){
+
+            if($jeux->getId()){
+                $jeux->setCreatedAt(new \DataTime());
+            }
 
 
             $manager->persist($jeux);
@@ -82,8 +84,8 @@ class SteamController extends AbstractController
 
     public function show(Games $jeux) {
 
-        //$comment = new Comment();
-        //$form = $this->createForm(CommentType::class, $comment);
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
 
         return $this->render('steam/show.html.twig', [
             'jeux' => $jeux
@@ -98,10 +100,33 @@ class SteamController extends AbstractController
         return $this->render('steam/profile.html.twig');
     }
 
-
     #[Route('/inscription', name: 'inscription')]
 
     public function inscription() {
         return $this->render('steam/registration.html.twig');
     }
+
+    #[Route('/editprofile',name: 'editprofile')]
+
+    public function editprofile(User $username,Request $request) {
+
+        $username->getUsername();
+        $form = $this->createForm(EditProfileType::class, $username);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($username);
+            $em->flush();
+
+            $this->addFlash('message','Profil mis a jour');
+            return $this->redirectToRoute('profile');
+        }
+
+        return $this->render('steam/editprofile.html.twig',[
+            'formJeux' => $form->createView(),
+        ]);
+    }
+
 }
