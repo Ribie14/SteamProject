@@ -6,14 +6,19 @@
 
 <p>Profil de {{app.user.username }}, voici toutes vos informations</p>
 
+        {% for message in app.flashes('message') %}
+			<div class="col-xs4">
+				<div class="p-3 my-2 rounded-2 success">{{message}}</div>
+			</div>
+		{% endfor %}
 
 <div class="grix xs2">
     <div>User: </div>
     <div>{{ app.user.username }}</div>
 
 
-    <a <button type="submit" href="{{ path('editprofile') }}" class="btn btn-success">Modifier le profil</button></a>
-    <button type="submit" class="btn btn-success">Modifier le mot de passe</button>
+    <a <button type="submit" href="{{ path('editprofile') }}" class="btn btn-primary">Modifier le profil</button></a>
+    <a <button type="submit" href="{{ path('editpass') }}" class="btn btn-primary">Modifier le mot de passe</button></a>
 
     <p>Jeux de {{app.user.username }}</p>
     {% for jeu in app.user.username %}      
