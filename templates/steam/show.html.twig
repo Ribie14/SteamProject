@@ -6,8 +6,10 @@
          <h2>{{ jeux.Titre }}</h2>
                 <div class ="content">
                     <img src="{{ jeux.image }}" alt"">
+                    <p></p>
                     {{ jeux.Description | raw}}
-                    {{ jeux.url | raw}}
+                    <p></p>
+                     <a href="{{ jeux.url | raw}}" class="btn btn-primary">Page du jeu</a>
                 </div>
                 
     </article>

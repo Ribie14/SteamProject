@@ -10,11 +10,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Form\JeuType;
+use App\Form\EditProfileType;
 
 class SteamController extends AbstractController
 {
@@ -63,7 +65,7 @@ class SteamController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
 
             if($jeux->getId()){
-                $jeux->setCreatedAt(new \DataTime());
+               // $jeux->setCreatedAt(new \DataTime());
             }
 
 
@@ -84,8 +86,8 @@ class SteamController extends AbstractController
 
     public function show(Games $jeux) {
 
-       // $comment = new Comment();
-        //$form = $this->createForm(CommentType::class, $comment);
+      //  $comment = new Comment();
+       // $form = $this->createForm(CommentType::class, $comment);
 
         return $this->render('steam/show.html.twig', [
             'jeux' => $jeux
@@ -108,16 +110,17 @@ class SteamController extends AbstractController
 
     #[Route('/editprofile',name: 'editprofile')]
 
-    public function editprofile(User $username,Request $request) {
+    public function editprofile(Request $request) {
 
-        $username->getUsername();
-        $form = $this->createForm(EditProfileType::class, $username);
+       // $username->getUsername();
+        $User = $this->getUser();
+        $form = $this->createForm(EditProfileType::class, $User);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
             $em = $this->getDoctrine()->getManager();
-            $em->persist($username);
+            $em->persist($User);
             $em->flush();
 
             $this->addFlash('message','Profil mis a jour');
@@ -125,8 +128,35 @@ class SteamController extends AbstractController
         }
 
         return $this->render('steam/editprofile.html.twig',[
-            'formJeux' => $form->createView(),
+            'form' => $form->createView(),
         ]);
+    }
+
+
+    #[Route('/editpass',name: 'editpass')]
+
+    public function editpass(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
+
+        
+        if($request->isMethod('POST')){
+            $em = $this->getDoctrine()->getManager();
+
+            $user = $this->getUser();
+
+            // On vérifie si les 2 mots de passe sont identiques
+            if($request->request->get('pass') == $request->request->get('pass2')){
+                $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('pass')));
+                $em->flush();
+                $this->addFlash('message', 'Mot de passe mis à jour avec succès');
+
+                return $this->redirectToRoute('users');
+
+            }else{
+                $this->addFlash('error', 'Les deux mots de passe ne sont pas identiques');
+            }
+        }
+
+        return $this->render('steam/editpass.html.twig');
     }
 
 }

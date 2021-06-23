@@ -28,9 +28,6 @@
                             <a class="nav-link" href="{{path('jeux')}}">Liste de jeux</a>
                             </li> 
 
-                             <li class="nav-item">
-                            <a class="nav-link" href="{{path('publication_jeux')}}">Publication d'un jeu</a>
-                            </li> 
 
 
                             {% if not app.user %}
@@ -44,6 +41,9 @@
                                     </li> 
                                 
                             {% else %}
+                                <li class="nav-item">
+                                <a class="nav-link" href="{{path('publication_jeux')}}">Publication d'un jeu</a>
+                                </li> 
                                 <li class="nav-item">
                                 <a href="{{ path('security_logout') }}" class="nav-link">
                                     Deconnexion
