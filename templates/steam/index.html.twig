@@ -10,7 +10,7 @@
          <h2>{{ jeu.Titre }}</h2>
                 <div class ="content">
                     <img src="{{ jeu.image }}" alt"">
-                    <p>{{ jeu.Prix }}</p>
+                    <p><a>Prix : </a>{{ jeu.Prix }}<a>€</a></p>
                     <p>{{ jeu.Description }}</p>
                     <a href="{{ path('jeux_show', {'id' : jeu.id}) }}" class="btn btn-primary">En savoir plus</a>
                 </div>

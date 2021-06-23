@@ -54,11 +54,10 @@ class Games
     private $categorie;
 
     /**
-     * @ORM\Column(type="string", length=1000)
+     * @ORM\Column(type="string", length=5000)
      * @Assert\Url()
      */
     private $image;
-
 
     public function getId(): ?int
     {

@@ -63,7 +63,7 @@ class SteamController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
 
             if($jeux->getId()){
-                $jeux->setCreatedAt(new \DataTime());
+               // $jeux->setCreatedAt(new \DataTime());
             }
 
 
@@ -84,8 +84,8 @@ class SteamController extends AbstractController
 
     public function show(Games $jeux) {
 
-       // $comment = new Comment();
-        //$form = $this->createForm(CommentType::class, $comment);
+      //  $comment = new Comment();
+       // $form = $this->createForm(CommentType::class, $comment);
 
         return $this->render('steam/show.html.twig', [
             'jeux' => $jeux
