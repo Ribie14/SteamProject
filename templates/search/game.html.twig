@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<section class="jeux">
+<h1> Recherche avancée</h1>
+    {{ form(search_form) }}
+
+<h1>Resultat de la recherche</h1>
+
+{% for jeu in games %}
+<div>
+    <h2>{{ jeu.Titre }}</h2>
+                <div class ="content">
+                    <img src="{{ jeu.image }}" alt"">
+                    <p>{{ jeu.Prix }}</p>
+                    <p>{{ jeu.Description }}</p>
+                    <a href="{{ path('jeux_show', {'id' : jeu.id}) }}" class="btn btn-primary">En savoir plus</a>
+                </div>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+{% block javascript %}
+
+{{ parent() }}
+    <scrip>
+        $(document).ready(function() {
+            $('select').formSelect();
+        });
+
+{% endblock %}

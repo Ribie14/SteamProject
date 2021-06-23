@@ -35,6 +35,18 @@ class GamesRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function searchGame($criteria)
+    {
+        return $this->createQueryBuilder('g')
+            ->where('g.Titre = :titre')
+            ->setParameter("titre", $criteria['titre']->getTitre())
+            ->andWhere('g.categorie = :categorie')
+            ->setParameter("categorie", $criteria['categorie']->getcategorie())
+            ->orderBy('g.Titre', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?Games
