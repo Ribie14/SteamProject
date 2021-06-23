@@ -13,7 +13,6 @@ class JeuType extends AbstractType
     {
         $builder
             ->add('Titre')
-            ->add('createur')
             ->add('description')
             ->add('Prix')
             ->add('categorie')

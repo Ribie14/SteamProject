@@ -2,7 +2,7 @@
 
 
 {% block body %}
-<h1> PARAMÈTRES </h1>
+<h1> Profile </h1>
 
 <p>Profil de {{app.user.username }}, voici toutes vos informations</p>
 
@@ -20,11 +20,6 @@
     <a <button type="submit" href="{{ path('editprofile') }}" class="btn btn-primary">Modifier le profil</button></a>
     <a <button type="submit" href="{{ path('editpass') }}" class="btn btn-primary">Modifier le mot de passe</button></a>
 
-    <p>Jeux de {{app.user.username }}</p>
-    {% for jeu in app.user.username %}      
-            <div>Titre: </div>
-            <div>{{ jeux.Titre }}</div>
-    {% endfor %}
 </div>
 
 {% endblock %}

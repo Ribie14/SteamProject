@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    <h1>Pour en savoir plus</h1>
     <article>
          <h2>{{ jeux.Titre }}</h2>
                 <div class ="content">
@@ -9,7 +9,13 @@
                     <p></p>
                     {{ jeux.Description | raw}}
                     <p></p>
-                     <a href="{{ jeux.url | raw}}" class="btn btn-primary">Page du jeu</a>
+                     <a type="submit" href="{{ jeux.url | raw}}" class="btn btn-primary">Page du jeu</a>
+                     
+
+                     
+                     <a type="submit" href="{{ path('publication_edit',{id: jeux.id}) }}" class="btn btn-primary">Modifier le jeu</a>
+
+
                 </div>
                 
     </article>

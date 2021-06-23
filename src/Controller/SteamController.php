@@ -63,6 +63,7 @@ class SteamController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $jeux->setCreateur($this->getUser()->getUsername());
 
             if($jeux->getId()){
                // $jeux->setCreatedAt(new \DataTime());
@@ -95,6 +96,8 @@ class SteamController extends AbstractController
 
         ]);
     }
+
+
 
     #[Route('/profile', name: 'profile')]
 
